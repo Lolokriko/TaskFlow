@@ -152,7 +152,7 @@ $numero = 7;
 <?php
   // Problema 3.1: Control de Acceso
 
-    $edad = 17;
+    $edad = 19;
 
         if ($edad >= 18) {
             echo "Puedes pasar <br>"; }
@@ -286,7 +286,14 @@ $numero = 7;
 <?php
   // Problema 4.4: Listado de Productos
 
-
+    $productos = [
+            ["nombre" => "Reloj Cartier", "precio" => 50],
+            ["nombre" => "Reloj Trucha", "precio" => 25],
+            ["nombre" => "Reloj Rolex", "precio" => 200]
+    ];
+    foreach ($productos as $producto) {
+        echo "Producto: " . $producto["nombre"] . ", Precio: " . $producto["precio"] . " €<br>";
+    }
 
 ?>
 
@@ -299,7 +306,17 @@ $numero = 7;
 <?php
   // Problema 5.1: Ficha de Usuario
 
+    $usuario = [
+            "nombre" => "Lolo",
+            "edad" => 19,
+            "email" => "lolorico@mondon.go",
+            "estudiante" => true
+    ];
 
+    echo "Nombre: " . $usuario["nombre"] . "<br>";
+        echo "Edad: " . $usuario["edad"] . "<br>";
+    echo "Email: " . $usuario["email"] . "<br>";
+        echo "¿Es estudiante?: " . ($usuario["estudiante"] ? "Sí" : "No") . "<br>";
 
 ?>
 
@@ -309,7 +326,13 @@ $numero = 7;
 <?php
   // Problema 5.2: Filtrado de Notas
 
+    $notas = [8.5, 4.2, 7.0, 9.8, 5.5, 3.9];
 
+    foreach ($notas as $nota) {
+        if ($nota >= 5) {
+            echo "Nota aprobada: $nota<br>";
+        }
+    }
 
 ?>
 
@@ -319,7 +342,20 @@ $numero = 7;
 <?php
   // Problema 5.3: Lista de la Compra Avanzada
 
+    $listaCompra = [
+            "Bebida" => ["Red bull", "Agua", "Fanta limon"],
+            "Chazina" => ["Caña de lomo", "Chorizo"],
+            "Filetes" => ["Ternera", "Mondongo", "Pollo"]
+    ];
 
+    foreach ($listaCompra as $categoria => $productos) {
+        echo "<strong>$categoria:</strong><br>";
+
+        foreach ($productos as $producto) {
+            echo "- $producto<br>";
+        }
+        echo "<br>";
+    }
 
 ?>
 
@@ -329,7 +365,21 @@ $numero = 7;
 <?php
   // Problema 5.4: Calculando el Total del Carrito
 
+    $productos = [
 
+            ["nombre" => "Teclado", "precio" => 50],
+            ["nombre" => "Ratón", "precio" => 25],
+            ["nombre" => "Monitor", "precio" => 200]
+    ];
+
+    $total = 0;
+
+    foreach ($productos as $producto) {
+        echo "Producto: " . $producto["nombre"] . ", Precio: " . $producto["precio"] . " €<br>";
+        $total += $producto["precio"];
+    }
+
+    echo "<br>Coste total del carrito: $total €<br>";
 
 ?>
 
