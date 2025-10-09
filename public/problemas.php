@@ -152,7 +152,7 @@ $numero = 7;
 <?php
   // Problema 3.1: Control de Acceso
 
-    $edad = 17;
+    $edad = 19;
 
         if ($edad >= 18) {
             echo "Puedes pasar <br>"; }
