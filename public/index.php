@@ -1,5 +1,9 @@
 <?php
 
+// Carga la biblioteca de funciones. Falla si no la encuentra.
+require_once '../app/functions.php';
+
+// Define el array de tareas
 $tasks = [
         [
                 'title' => 'Completar la práctica de TaskFlow (UD2)',
@@ -28,6 +32,7 @@ $tasks = [
         ]
 ];
 
+// Incluye el archivo HTML del encabezado
 include '../app/views/header.php';
 
 ?>
@@ -36,32 +41,18 @@ include '../app/views/header.php';
 
 <ul class="task-list">
     <?php
+    // Recorre cada tarea del array $tasks
     foreach ($tasks as $task) {
 
-        $taskClasses = 'task-item';
-
-        if ($task['completed']) {
-            $taskClasses .= ' completed';
-        }
-
-        switch ($task['priority']) {
-            case 'alta':
-                $taskClasses .= ' priority-alta';
-                break;
-            case 'media':
-                $taskClasses .= ' priority-media';
-                break;
-            case 'baja':
-                $taskClasses .= ' priority-baja';
-                break;
-        }
-
-        echo '<li class="' . $taskClasses . '">' . htmlspecialchars($task['title']) . '</li>';
+        // Llama a la función de 'functions.php' para "dibujar" el <li>
+        // e imprime (echo) el HTML que esta devuelve.
+        echo renderizarTarea($task);
     }
     ?>
 </ul>
 
 <?php
+// Incluye el archivo HTML del pie de página
 include '../app/views/footer.php';
 ?>
 
