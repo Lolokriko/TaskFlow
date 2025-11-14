@@ -1,30 +1,50 @@
+
 <?php
-  // Bloque de configuración principal
+// public/index.php
+// 1. Cargar todas nuestras herramientas
+require_once '../app/functions.php'; // Funciones de la PE3
+require_once '../app/data.php'; // Nuestro "Modelo" de datos
+require_once '../app/controllers/AuthController.php'; // Nuestro "Controlador" de autenticación
 
-  define("SITE_NAME", "TaskFlow");
-  $pageTitle = SITE_NAME . " - Página de Inicio";
-
-  $userName = "Lolo Kriko"; // Tipo String
-  $userAge = 19;             // Tipo Integer
-  $isPremiumUser = true;     // Tipo Boolean
+// 2. Lógica del Router (Controlador Frontal)
+$accion = $_GET['accion'] ?? 'login'; // Acción por defecto: 'login'
+switch ($accion) {
+    case 'login':
+        // Lógica para procesar el envío del formulario de login
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            if (handleLogin($email, $password, $usuarios_bbdd)) {
+                header('Location: index.php?accion=dashboard'); // Redirige al dashboard
+                exit;
+            } else {
+                $error = "Credenciales incorrectas."; // Variable para lavista
+            }
+        }
+        // Si no es POST o el login falla, muestra la vista de login
+        include '../app/views/login.view.php';
+        break;
+    case 'dashboard':
+        // Protección de la ruta (Tema 5)
+        if (!checkAuth()) {
+            header('Location: index.php?accion=login');
+            exit;
+        }
+        // Si estamos autenticados, preparamos los datos para la vista
+        $tareas = [
+                ['titulo' => 'Implementar Login', 'completado' => true,
+                        'prioridad' => 'alta'],
+                ['titulo' => 'Añadir Pruebas Unitarias', 'completado' => false,
+                        'prioridad' => 'media']
+        ];
+        // Cargamos la vista del dashboard
+        include '../app/views/tareas.view.php';
+        break;
+    case 'logout':
+        handleLogout();
+        break;
+    default:
+        echo "Error 404: Página no encontrada.";
+        break;
+}
 ?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title><?php echo $pageTitle; ?></title>
-</head>
-<body>
-    <header>
-        <h1>Bienvenido a <?php echo SITE_NAME; ?></h1>
-    </header>
-
-    <main>
-        <h2>Perfil del Usuario</h2>
-        <p><strong>Nombre:</strong> <?php echo $userName; ?></p>
-        <p><strong>Edad:</strong> <?php echo $userAge; ?> años</p>
-        <p><strong>Estado de la cuenta:</strong> Usuario <?php echo $isPremiumUser ? "Premium" : "Estándar"; ?></p>
-    </main>
-</body>
-</html>
